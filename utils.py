@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 from config import config
 
 import torch
@@ -41,17 +42,24 @@ class TextDataset():
 
         return self.texts[idx]
 
+
 def load_datasets():
 
-    # Load train and val from txt files
-    with open(config["train_dataset_path"], "r") as f:
-        train_data = f.read()
+    # Load train and val from txt 
+    if config["train_dataset_path"].endswith(".csv"):
+        train_texts = process_DF(config["train_dataset_path"])
+    else:
+        with open(config["train_dataset_path"], "r") as f:
+            train_data = f.read()
 
-    with open(config["test_dataset_path"], "r") as f:
-        val_data = f.read()
+    if config["test_dataset_path"].endswith(".csv"):
+        val_texts = process_DF(config["test_dataset_path"])
+    else:
+        with open(config["test_dataset_path"], "r") as f:
+            val_data = f.read()
 
-    train_texts = [t for t in train_data.split('\n') if t.strip()]
-    val_texts   = [t for t in val_data.split('\n') if t.strip()]
+    # train_texts = [t for t in train_data.split('\n') if t.strip()]
+    # val_texts   = [t for t in val_data.split('\n') if t.strip()]
 
     train_dataset = TextDataset(train_texts)
     val_dataset   = TextDataset(val_texts)
@@ -69,3 +77,14 @@ def load_datasets():
     )
 
     return train_loader, val_loader
+
+
+def process_DF(dataset_path):
+    df = pd.read_csv(dataset_path)
+
+    return (
+        df["text"]
+        .dropna()
+        .astype(str)
+        .tolist()
+    )

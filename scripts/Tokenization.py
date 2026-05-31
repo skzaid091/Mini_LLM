@@ -178,9 +178,28 @@ class Tokenizer:
                 next_token_id
             )
 
+            left = bytes(self.vocab[best_pair[0]]).decode(
+                "utf-8",
+                errors="replace"
+            )
+
+            right = bytes(self.vocab[best_pair[1]]).decode(
+                "utf-8",
+                errors="replace"
+            )
+
+            merged = bytes(
+                self.vocab[next_token_id]
+            ).decode(
+                "utf-8",
+                errors="replace"
+            )
+
             print(
                 f"Merge {i+1}: "
-                f"{best_pair} -> {next_token_id}"
+                f"'{left}' + '{right}' "
+                f"-> '{merged}' "
+                f"({next_token_id})"
             )
 
             next_token_id += 1
