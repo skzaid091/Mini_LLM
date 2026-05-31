@@ -22,10 +22,10 @@ config = {
     "gelu_const": math.sqrt(2.0 / math.pi),
 
     "train_vocab": True,
-    "vocab_save_path": "data/train_data_1.pkl",
+    "vocab_save_path": "data/vocab/tiny_stories_vocab.pkl",
     
-    "train_dataset_path": "data/wiki-2/train.txt",
-    "test_dataset_path": "data/wiki-2/test.txt",
+    "train_dataset_path": "data/tiny_stories/train.txt",
+    "test_dataset_path": "data/tiny_stories/test.txt",
 
-    "model_save_path": "models/mini_llm_checkpoint.pt"
+    "model_save_path": "models/tiny_stories_mini_llm_checkpoint.pt"
 }
